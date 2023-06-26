@@ -1,5 +1,6 @@
 package catalog;
 
+import com.sun.tools.javac.Main;
 import configuration.Settings;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -10,9 +11,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import page.MainPage;
 
 import java.time.Duration;
 
+import static configuration.Settings.actions;
 import static configuration.Settings.driver;
 
 public class CatalogTests {
@@ -23,14 +26,8 @@ public class CatalogTests {
     }
 
     @Test
-    void i() {
-        WebElement menBtn = driver.findElement(By
-                .cssSelector("a[href='https://magento.softwaretestingboard.com/men.html']"));
-        Actions actions = new Actions(driver);
-        menBtn.click();
-        WebElement menTopsBtn = driver.findElement(By
-                .cssSelector("li.item > a[href='https://magento.softwaretestingboard.com/men/tops-men.html']"));
-        menTopsBtn.click();
+    void maxCountOfProductsOnOnePageTest() {
+        MainPage.clickButtonMenTopsBtn();
         var products = driver.findElements(By.cssSelector(".item.product.product-item"));
         int expected = 12;
         int actual = products.size();
