@@ -11,9 +11,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import page.CatalogPage;
 import page.MainPage;
 
 import java.time.Duration;
+import java.util.List;
 
 import static configuration.Settings.actions;
 import static configuration.Settings.driver;
@@ -26,16 +28,20 @@ public class CatalogTests {
     }
 
     @Test
-    void maxCountOfProductsOnOnePageTest() {
-        MainPage.clickButtonMenTopsBtn();
-        var products = driver.findElements(By.cssSelector(".item.product.product-item"));
-        int expected = 12;
-        int actual = products.size();
-        Assertions.assertEquals(expected, actual);
+    void maxLimitOfProductsOnAllPagesTest() {
+        MainPage mainPage = new MainPage();
+        CatalogPage catalogPage = mainPage.clickButtonWomenTopsBtn();
+        int expected = 36;
+        catalogPage.changeLimitOfProductsOnOnePage(expected);
+        List<Integer> productAmounts = catalogPage.getAmountOfProductsFromAllPages();
+        for (int i = 0; i < productAmounts.size(); i++) {
+            Assertions.assertTrue(productAmounts.get(i) == expected ||
+                    i == productAmounts.size()-1 & productAmounts.get(i) <= expected);
+        }
     }
 
     @AfterAll
-    static void closeSession() {
-        driver.close();
+    static void shutdownDriverSession() {
+        driver.quit();
     }
 }

@@ -11,12 +11,28 @@ import static configuration.Settings.actions;
 import static configuration.Settings.driver;
 
 public class MainPage {
-    public static WebElement menBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
-            .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='ui-id-5']")));
-    public static WebElement menTopsBtn =new WebDriverWait(driver, Duration.ofSeconds(10))
-            .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='ui-id-17']")));
+    private final WebElement menBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
+            .until(ExpectedConditions.presenceOfElementLocated(By
+                    .xpath("//*[@id='ui-id-5']")));
+    private final WebElement menTopsBtn =new WebDriverWait(driver, Duration.ofSeconds(10))
+            .until(ExpectedConditions.presenceOfElementLocated(By
+                    .xpath("//*[@id='ui-id-17']")));
+    private final WebElement womenBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
+            .until(ExpectedConditions.presenceOfElementLocated(By
+                    .xpath("//*[@id='ui-id-4']")));
+    private final WebElement womenTopsBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
+            .until(ExpectedConditions.presenceOfElementLocated(By
+                    .xpath("//*[@id='ui-id-9']")));
 
-    public static void clickButtonMenTopsBtn(){
+    public CatalogPage clickButtonMenTopsBtn(){
         actions.moveToElement(menBtn).pause(Duration.ofSeconds(1)).click(menTopsBtn).perform();
+
+        return new CatalogPage();
+    }
+
+    public CatalogPage clickButtonWomenTopsBtn(){
+        actions.moveToElement(womenBtn).pause(Duration.ofSeconds(1)).click(womenTopsBtn).perform();
+
+        return new CatalogPage();
     }
 }
