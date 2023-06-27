@@ -64,4 +64,13 @@ public class CatalogPage {
 
         return productAmounts;
     }
+
+    public ProductPage openFirstProductPage() {
+        WebElement firstProductPageNameBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.presenceOfElementLocated(By
+                        .xpath("//li[@class='item product product-item'][1]//a[@class='product-item-link']")));
+        firstProductPageNameBtn.click();
+
+        return new ProductPage();
+    }
 }

@@ -1,5 +1,6 @@
 package catalog;
 
+import basetest.BaseTest;
 import com.sun.tools.javac.Main;
 import configuration.Settings;
 import org.junit.jupiter.api.AfterAll;
@@ -20,13 +21,8 @@ import java.util.List;
 import static configuration.Settings.actions;
 import static configuration.Settings.driver;
 
-public class CatalogTests {
-
-    @BeforeEach
-    void openWebSite() {
-        driver.get("https://magento.softwaretestingboard.com/");
-    }
-
+public class CatalogTests extends BaseTest {
+    //автоматизированный тест-кейс №4
     @Test
     void maxLimitOfProductsOnAllPagesTest() {
         MainPage mainPage = new MainPage();
@@ -40,8 +36,4 @@ public class CatalogTests {
         }
     }
 
-    @AfterAll
-    static void shutdownDriverSession() {
-        driver.quit();
-    }
 }
