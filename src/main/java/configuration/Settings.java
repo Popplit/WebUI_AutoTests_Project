@@ -8,4 +8,5 @@ import org.openqa.selenium.interactions.Actions;
 public class Settings {
     public static WebDriver driver = new ChromeDriver();
     public static Actions actions = new Actions(driver);
+
 }

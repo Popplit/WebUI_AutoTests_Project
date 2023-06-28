@@ -12,7 +12,7 @@ import static configuration.Settings.driver;
 
 public class ProductPage {
 
-    private final WebElement productName = new WebDriverWait(driver, Duration.ofSeconds(10))
+    private final WebElement productPageTitle = new WebDriverWait(driver, Duration.ofSeconds(10))
             .until(ExpectedConditions.presenceOfElementLocated(By
                     .xpath("//*[@class='page-title']//span")));
     private final WebElement reviewsBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -42,13 +42,17 @@ public class ProductPage {
         WebElement starRatingReviewBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.presenceOfElementLocated(By
                         .xpath("//*[@id='Rating_"+rating+"_label']")));
-        String starRatingReviewBtnWidth = starRatingReviewBtn.getAttribute("clientWidth");
-        actions.moveToElement(starRatingReviewBtn, Integer.parseInt(starRatingReviewBtnWidth)-5, 0).click().perform();
+        int starRatingReviewBtnWidth = Integer.parseInt(starRatingReviewBtn.getAttribute("clientWidth"));
+        double xOffSet = Math.ceil(starRatingReviewBtnWidth*(1/rating));
+        actions.moveToElement(starRatingReviewBtn, (int)xOffSet, 0).click().perform();
     }
     public boolean checkForReviewSubmitSuccessMessage() {
         WebElement reviewSubmitSuccessMessage = new WebDriverWait(driver, Duration.ofSeconds(30))
                 .until(ExpectedConditions.presenceOfElementLocated(By
                         .xpath("//*[@data-ui-id='message-success']")));
         return reviewSubmitSuccessMessage.isDisplayed();
+    }
+    public String getProductName() {
+        return productPageTitle.getText();
     }
 }

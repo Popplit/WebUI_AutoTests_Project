@@ -1,32 +1,19 @@
-package catalog;
+package test.catalogPage;
 
-import basetest.BaseTest;
-import com.sun.tools.javac.Main;
-import configuration.Settings;
-import org.junit.jupiter.api.AfterAll;
+import test.BaseTest;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import page.CatalogPage;
 import page.MainPage;
 
-import java.time.Duration;
 import java.util.List;
 
-import static configuration.Settings.actions;
-import static configuration.Settings.driver;
-
-public class CatalogTests extends BaseTest {
+public class CatalogTest extends BaseTest {
     //автоматизированный тест-кейс №4
     @Test
     void maxLimitOfProductsOnAllPagesTest() {
         MainPage mainPage = new MainPage();
-        CatalogPage catalogPage = mainPage.clickButtonWomenTopsBtn();
+        CatalogPage catalogPage = mainPage.clickWomenTopsBtn();
         int expected = 36;
         catalogPage.changeLimitOfProductsOnOnePage(expected);
         List<Integer> productAmounts = catalogPage.getAmountOfProductsFromAllPages();

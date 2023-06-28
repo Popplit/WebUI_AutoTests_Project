@@ -24,13 +24,13 @@ public class MainPage {
             .until(ExpectedConditions.presenceOfElementLocated(By
                     .xpath("//*[@id='ui-id-9']")));
 
-    public CatalogPage clickButtonMenTopsBtn(){
+    public CatalogPage clickMenTopsBtn(){
         actions.moveToElement(menBtn).pause(Duration.ofSeconds(1)).click(menTopsBtn).perform();
 
         return new CatalogPage();
     }
 
-    public CatalogPage clickButtonWomenTopsBtn(){
+    public CatalogPage clickWomenTopsBtn(){
         actions.moveToElement(womenBtn).pause(Duration.ofSeconds(1)).click(womenTopsBtn).perform();
 
         return new CatalogPage();

@@ -24,6 +24,7 @@ public class CatalogPage {
                     .xpath("(//div[@class='field limiter'])[last()]")));
     private final Actions actions = new Actions(driver);
     WebElement nextPageBtn;
+    WebElement firstProductCardNameBtn;
 
     public void changeLimitOfProductsOnOnePage(int newLimitValue) {
         limiterList.click();
@@ -66,11 +67,18 @@ public class CatalogPage {
     }
 
     public ProductPage openFirstProductPage() {
-        WebElement firstProductPageNameBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
+         firstProductCardNameBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.presenceOfElementLocated(By
                         .xpath("//li[@class='item product product-item'][1]//a[@class='product-item-link']")));
-        firstProductPageNameBtn.click();
+        firstProductCardNameBtn.click();
 
         return new ProductPage();
+    }
+    public String getFirstProductName() {
+        firstProductCardNameBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.presenceOfElementLocated(By
+                        .xpath("//li[@class='item product product-item'][1]//a[@class='product-item-link']")));
+        return firstProductCardNameBtn.getText();
+
     }
 }
