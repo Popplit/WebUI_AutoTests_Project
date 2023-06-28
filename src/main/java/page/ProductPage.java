@@ -43,8 +43,8 @@ public class ProductPage {
                 .until(ExpectedConditions.presenceOfElementLocated(By
                         .xpath("//*[@id='Rating_"+rating+"_label']")));
         int starRatingReviewBtnWidth = Integer.parseInt(starRatingReviewBtn.getAttribute("clientWidth"));
-        double xOffSet = Math.ceil(starRatingReviewBtnWidth*(1/rating));
-        actions.moveToElement(starRatingReviewBtn, (int)xOffSet, 0).click().perform();
+        int xOffset = Math.round(starRatingReviewBtnWidth*0.5f);
+        actions.moveToElement(starRatingReviewBtn, xOffset, 0).click().perform();
     }
     public boolean checkForReviewSubmitSuccessMessage() {
         WebElement reviewSubmitSuccessMessage = new WebDriverWait(driver, Duration.ofSeconds(30))

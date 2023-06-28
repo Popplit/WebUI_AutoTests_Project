@@ -11,7 +11,7 @@ public class ProductPageTest extends BaseTest {
     //автоматизированный тест-кейс №7
     @Test
     public void sendReviewOnModerationTest() {
-        int rating = 3;
+        int rating = 5;
         String nickname = "Тестировщик";
         String summary = "Тестовое название";
         String review = "Тест";

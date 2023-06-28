@@ -17,10 +17,7 @@ public class CatalogTest extends BaseTest {
         int expected = 36;
         catalogPage.changeLimitOfProductsOnOnePage(expected);
         List<Integer> productAmounts = catalogPage.getAmountOfProductsFromAllPages();
-        for (int i = 0; i < productAmounts.size(); i++) {
-            Assertions.assertTrue(productAmounts.get(i) == expected ||
-                    i == productAmounts.size()-1 & productAmounts.get(i) <= expected);
-        }
+        Assertions.assertTrue(catalogPage.checkIfAmountsOfProductNotExceedingTheLimit(productAmounts, expected));
     }
 
 }

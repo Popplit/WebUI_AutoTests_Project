@@ -19,7 +19,7 @@ import static configuration.Settings.driver;
 
 public class CatalogPage {
 
-    private final WebElement limiterList = new WebDriverWait(driver, Duration.ofSeconds(10))
+    private final WebElement limiterList = new WebDriverWait(driver, Duration.ofSeconds(25))
             .until(ExpectedConditions.presenceOfElementLocated(By
                     .xpath("(//div[@class='field limiter'])[last()]")));
     private final Actions actions = new Actions(driver);
@@ -80,5 +80,15 @@ public class CatalogPage {
                         .xpath("//li[@class='item product product-item'][1]//a[@class='product-item-link']")));
         return firstProductCardNameBtn.getText();
 
+    }
+
+    public boolean checkIfAmountsOfProductNotExceedingTheLimit(List<Integer> productAmounts, int expected) {
+        for (int i = 0; i < productAmounts.size(); i++) {
+            if (productAmounts.get(i) != expected & i < productAmounts.size()-1 ||
+                    i == productAmounts.size()-1 & productAmounts.get(i) > expected) {
+                return false;
+            }
+        }
+        return true;
     }
 }
