@@ -1,4 +1,4 @@
-package test.catalogPage;
+package test.catalog;
 
 import test.BaseTest;
 import org.junit.jupiter.api.Assertions;
@@ -8,16 +8,18 @@ import page.MainPage;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class CatalogTest extends BaseTest {
-    //автоматизированный тест-кейс №4
+
     @Test
     void maxLimitOfProductsOnAllPagesTest() {
-        MainPage mainPage = new MainPage();
-        CatalogPage catalogPage = mainPage.clickWomenTopsBtn();
         int expected = 36;
-        catalogPage.changeLimitOfProductsOnOnePage(expected);
+
+        catalogPage                  = mainPage.clickWomenTopsBtn().changeLimitOfProductsOnOnePage(expected);
         List<Integer> productAmounts = catalogPage.getAmountOfProductsFromAllPages();
-        Assertions.assertTrue(catalogPage.checkIfAmountsOfProductNotExceedingTheLimit(productAmounts, expected));
+
+        assertTrue(catalogPage.checkIfAmountsOfProductNotExceedingTheLimit(productAmounts, expected));
     }
 
 }

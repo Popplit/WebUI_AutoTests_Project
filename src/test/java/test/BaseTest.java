@@ -1,27 +1,30 @@
 package test;
 
-import org.junit.jupiter.api.AfterAll;
+import configuration.Settings;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.AfterAllCallback;
-import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import page.BasePage;
+import page.CatalogPage;
+import page.MainPage;
+import page.ProductPage;
 
-import static configuration.Settings.driver;
 
-public class BaseTest {
-//    @BeforeAll
-//    static void initializeNewDriver() {
-//        driver = new ChromeDriver();
-//    }
+public class BaseTest extends Settings {
+
+    protected BasePage basePage = new BasePage(createDriver());
+    protected MainPage mainPage;
+    protected CatalogPage catalogPage;
+    protected ProductPage productPage;
+
     @BeforeEach
     void openWebSite() {
-        driver.get("https://magento.softwaretestingboard.com/");
+        mainPage = basePage.initDriver(URL);
     }
-//    @AfterAll
-//     static void shutdownDriverSession() {
-//        driver.close();
-//    }
+
+    @AfterEach
+    void closeWebSite() {
+        basePage.closeDriver();
+    }
+
 }

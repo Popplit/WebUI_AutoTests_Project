@@ -1,11 +1,9 @@
 package page;
 
-import configuration.Settings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,27 +12,29 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static configuration.Settings.actions;
-import static configuration.Settings.driver;
-
-public class CatalogPage {
+public class CatalogPage extends BasePage {
 
     private final WebElement limiterList = new WebDriverWait(driver, Duration.ofSeconds(25))
             .until(ExpectedConditions.presenceOfElementLocated(By
                     .xpath("(//div[@class='field limiter'])[last()]")));
     private final Actions actions = new Actions(driver);
     WebElement nextPageBtn;
-    WebElement firstProductCardNameBtn;
+    private WebElement firstProductCardNameBtn = waitForElement("//li[@class='item product product-item'][1]//a[@class='product-item-link']");
 
-    public void changeLimitOfProductsOnOnePage(int newLimitValue) {
+    public CatalogPage(WebDriver driver) {
+        super(driver);
+    }
+
+    public CatalogPage changeLimitOfProductsOnOnePage(int newLimitValue) {
         limiterList.click();
         List<WebElement> limiters = new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("(//div[@class='field limiter'])[last()]//option")));
         for (WebElement limit : limiters) {
-            if (limit.getAttribute("label" ).contains(Integer.toString(newLimitValue))) {
+            if (limit.getAttribute("label").contains(Integer.toString(newLimitValue))) {
                 limit.click();
                 break;
             }
         }
+        return this;
     }
 
     public int getAmountOfProductsOnOnePage() {
@@ -43,7 +43,7 @@ public class CatalogPage {
         return productsOnPage.size();
     }
 
-    public boolean goToNextPage(){
+    public boolean goToNextPage() {
         try {
             nextPageBtn = (new WebDriverWait(driver, Duration.ofSeconds(1))
                     .until(ExpectedConditions.presenceOfAllElementsLocatedBy(
@@ -67,28 +67,28 @@ public class CatalogPage {
     }
 
     public ProductPage openFirstProductPage() {
-         firstProductCardNameBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By
-                        .xpath("//li[@class='item product product-item'][1]//a[@class='product-item-link']")));
         firstProductCardNameBtn.click();
 
-        return new ProductPage();
+        return new ProductPage(driver);
     }
-    public String getFirstProductName() {
-        firstProductCardNameBtn = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By
-                        .xpath("//li[@class='item product product-item'][1]//a[@class='product-item-link']")));
-        return firstProductCardNameBtn.getText();
 
+    public String getFirstProductName() {
+        return firstProductCardNameBtn.getText();
     }
 
     public boolean checkIfAmountsOfProductNotExceedingTheLimit(List<Integer> productAmounts, int expected) {
+
         for (int i = 0; i < productAmounts.size(); i++) {
-            if (productAmounts.get(i) != expected & i < productAmounts.size()-1 ||
-                    i == productAmounts.size()-1 & productAmounts.get(i) > expected) {
+
+            if (isProduct(productAmounts,expected,i) ||isProduct(productAmounts,expected,i) ) {
                 return false;
+
             }
         }
+
         return true;
     }
+     private boolean isProduct(List<Integer> productAmounts, int expected, int i) {
+        return productAmounts.get(i) != expected & i < productAmounts.size() - 1;
+     }
 }
